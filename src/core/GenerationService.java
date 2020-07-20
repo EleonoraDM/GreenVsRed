@@ -1,6 +1,6 @@
-package factories;
+package core;
 
-public interface GenerationFactory {
+public interface GenerationService {
 
     int[][] createNextGeneration(int x, int y, int[][] matrix);
 

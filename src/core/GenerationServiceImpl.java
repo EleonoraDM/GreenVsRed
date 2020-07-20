@@ -1,18 +1,23 @@
-package factories;
+package core;
 
+import factories.CellFactory;
+import factories.CellFactoryImpl;
 import models.cell.Cell;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-public class GenerationFactoryImpl implements GenerationFactory {
-    private static final List<Integer> RED_TO_GREEN_RULE = Arrays.asList(3, 6);
-    private static final List<Integer> GREEN_TO_RED_RULE = Arrays.asList(0, 1, 4, 5, 7, 8);
+public class GenerationServiceImpl implements GenerationService {
 
-    private static CellFactory cellFactory = new CellFactoryImpl();
-    private static Map<Cell, Integer> cellCollection = new LinkedHashMap<>();
+    private RulesController controller;
+    private CellFactory cellFactory;
+    private Map<Cell, Integer> cellCollection;
+
+    public GenerationServiceImpl() {
+        this.controller = new RulesControllerImpl();
+        this.cellFactory = new CellFactoryImpl();
+        this.cellCollection = new LinkedHashMap<>();
+    }
 
     @Override
     public int[][] createNextGeneration(int x, int y, int[][] matrix) {
@@ -27,40 +32,20 @@ public class GenerationFactoryImpl implements GenerationFactory {
                 cellCollection.put(cell, greenis);
             }
         }
-        applyRules(cellCollection, matrix);
+        controller.applyRules(cellCollection, matrix);
         cellCollection.clear();
 
         return matrix;
     }
 
-    private static void applyRules(Map<Cell, Integer> cellCollection, int[][] generation) {
-        for (Map.Entry<Cell, Integer> entry : cellCollection.entrySet()) {
-
-            Cell cell = entry.getKey();
-            int greenis = entry.getValue();
-            int col = cell.getX();
-            int row = cell.getY();
-
-            if (cell.getClass().getSimpleName().equals("Green")
-                    && GREEN_TO_RED_RULE.contains(greenis)) {
-                generation[row][col] = 0;
-            }
-
-            if (cell.getClass().getSimpleName().equals("Red")
-                    && RED_TO_GREEN_RULE.contains(greenis)) {
-                generation[row][col] = 1;
-            }
-        }
-    }
-
-    private static int countGreenis(Cell cell) {
+    private int countGreenis(Cell cell) {
         return ((int) cell.getNeighbours()
                 .stream()
                 .filter(c -> c.getClass().getSimpleName().equals("Green"))
                 .count());
     }
 
-    private static void extractNeighbours(Cell cell, int x, int y, int[][] matrix) {
+    private void extractNeighbours(Cell cell, int x, int y, int[][] matrix) {
         int x1 = cell.getX();//COL
         int y1 = cell.getY();//ROW
 

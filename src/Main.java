@@ -1,11 +1,11 @@
-import factories.GenerationFactory;
-import factories.GenerationFactoryImpl;
+import core.GenerationService;
+import core.GenerationServiceImpl;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    private static GenerationFactory factory = new GenerationFactoryImpl();
+    private static GenerationService factory = new GenerationServiceImpl();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
