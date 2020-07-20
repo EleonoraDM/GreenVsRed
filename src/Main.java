@@ -1,11 +1,11 @@
-import core.GenerationService;
-import core.GenerationServiceImpl;
+import services.ColourCounter;
+import services.ColourCounterImpl;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    private static GenerationService factory = new GenerationServiceImpl();
+    private static ColourCounter counter = new ColourCounterImpl();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -31,26 +31,7 @@ public class Main {
         int y1 = line[1];
         int n = line[2];
 
-        int targetValue = matrix[y1][x1];
-        int counter = 0;
-
-        if (getTargetColour(targetValue)) {
-            counter++;
-        }
-
-        while (n-- > 0) {
-
-            matrix = factory.createNextGeneration(x, y, matrix);
-
-            if (getTargetColour(matrix[y1][x1])) {
-                counter++;
-            }
-        }
-        System.out.println(counter);
-    }
-
-    private static boolean getTargetColour(int targetValue) {
-        return targetValue == 1;
+        System.out.println(counter.countGreenis(x, y, matrix, y1, x1, n));
     }
 }
 

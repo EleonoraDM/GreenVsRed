@@ -8,30 +8,30 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class NeighbourExtractorImpl implements NeighbourExtractor {
+public class GridCreatorImpl implements GridCreator {
     private CellFactory factory;
-    private Map<Cell, Integer> cellCollection;
+    private Map<Cell, Integer> grid;
 
-    public NeighbourExtractorImpl() {
+    public GridCreatorImpl() {
         this.factory = new CellFactoryImpl();
-        this.cellCollection = new LinkedHashMap<>();
+        this.grid = new LinkedHashMap<>();
     }
 
     @Override
-    public Map<Cell, Integer> getNeighbours(int row, int col,int x, int y, int[][] matrix) {
+    public Map<Cell, Integer> getCells(int row, int col, int x, int y, int[][] matrix) {
         int cellValue = matrix[row][col];
 
         Cell cell = factory.createCell(col, row, cellValue);
         extractNeighbours(cell, x, y, matrix);
         int greenis = countGreenis(cell);
-        cellCollection.put(cell, greenis);
+        grid.put(cell, greenis);
 
-        return Collections.unmodifiableMap(cellCollection);
+        return Collections.unmodifiableMap(grid);
     }
 
     @Override
     public void clearCollection(Map<Cell, Integer> cells) {
-        cellCollection.clear();
+        grid.clear();
     }
 
     private void extractNeighbours(Cell cell, int x, int y, int[][] matrix) {

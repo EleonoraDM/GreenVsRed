@@ -1,22 +1,22 @@
-package core;
+package factories;
 
 import models.cell.Cell;
-import services.NeighbourExtractor;
-import services.NeighbourExtractorImpl;
+import services.GridCreator;
+import services.GridCreatorImpl;
 import services.RulesController;
 import services.RulesControllerImpl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GenerationServiceImpl implements GenerationService {
+public class GenerationFactoryImpl implements GenerationFactory {
 
     private RulesController controller;
-    private NeighbourExtractor extractor;
+    private GridCreator creator;
 
-    public GenerationServiceImpl() {
+    public GenerationFactoryImpl() {
         this.controller = new RulesControllerImpl();
-        this.extractor = new NeighbourExtractorImpl();
+        this.creator = new GridCreatorImpl();
     }
 
     @Override
@@ -26,11 +26,11 @@ public class GenerationServiceImpl implements GenerationService {
         for (int row = 0; row < matrix.length; row++) {
             for (int col = 0; col < matrix[row].length; col++) {
 
-               neighbours = extractor.getNeighbours(row, col, x, y, matrix);
+               neighbours = creator.getCells(row, col, x, y, matrix);
             }
         }
         controller.applyRules(neighbours, matrix);
-        extractor.clearCollection(neighbours);
+        creator.clearCollection(neighbours);
 
         return matrix;
     }
