@@ -25,7 +25,7 @@ public class EngineImpl implements Engine {
                 int x = dimensions[0];//TODO - cols !!!
                 int y = dimensions[1];//TODO - rows !!!
 
-                if (x > 2 && x <= y && y < 1000) {
+                if (x >= 2 && x <= y && y < 1000) {
                     int[][] matrix = new int[y][x];
 
                     for (int i = 0; i < y; i++) {

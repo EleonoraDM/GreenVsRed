@@ -22,7 +22,7 @@ public class GreenVsRedAppTest {
     }
 
     @Test
-    public void notAllowedToCreateGrid_WithColsMoreThanRows() throws IOException {
+    public void invalidGridDimensions_ColsGreaterThanRows() throws IOException {
         exc.expect(IllegalArgumentException.class);
         exc.expectMessage("Invalid grid dimensions!");
         file = getFileFromResources("exc1.txt");
@@ -30,7 +30,7 @@ public class GreenVsRedAppTest {
     }
 
     @Test
-    public void notAllowedToCreateGrid_WithRowsEqualOrMoreThan1000() throws IOException {
+    public void invalidGridDimensions_RowsGreaterThanOrEqualTo1000() throws IOException {
         exc.expect(IllegalArgumentException.class);
         exc.expectMessage("Invalid grid dimensions!");
         file = getFileFromResources("exc2.txt");
@@ -38,7 +38,7 @@ public class GreenVsRedAppTest {
     }
 
     @Test
-    public void notAllowedToCreateGrid_WithAnyOfTheDimensionsLowerThan2() throws IOException {
+    public void invalidGridDimensions_WithAnyOfTheDimensionsLessThan2() throws IOException {
         exc.expect(IllegalArgumentException.class);
         exc.expectMessage("Invalid grid dimensions!");
         file = getFileFromResources("exc3.txt");
@@ -51,6 +51,18 @@ public class GreenVsRedAppTest {
         exc.expectMessage("Targeted cell is outside the grid!");
         file = getFileFromResources("exc4.txt");
         engine.run(file);
+    }
+
+    @Test
+    public void extractsResultWithMaxGridDimensions() throws IOException {
+        file = getFileFromResources("max_dimension.txt");
+        System.out.println(engine.run(file));
+    }
+
+    @Test
+    public void extractsResultWithMinGridDimensions() throws IOException {
+        file = getFileFromResources("min_dimension.txt");
+        System.out.println(engine.run(file));
     }
 
 
