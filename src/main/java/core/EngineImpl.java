@@ -1,5 +1,6 @@
 package core;
 
+import common.ExceptionMessages;
 import services.ColourCounter;
 import services.ColourCounterImpl;
 
@@ -24,7 +25,7 @@ public class EngineImpl implements Engine {
                 int x = dimensions[0];//TODO - cols !!!
                 int y = dimensions[1];//TODO - rows !!!
 
-                if (x > 0 && x <= y && y < 1000) {
+                if (x > 2 && x <= y && y < 1000) {
                     int[][] matrix = new int[y][x];
 
                     for (int i = 0; i < y; i++) {
@@ -40,10 +41,14 @@ public class EngineImpl implements Engine {
                     int y1 = line[1];
                     int n = line[2];
 
-                    result = counter.countGreenis(x, y, matrix, y1, x1, n);
+                    if ((x1 >= 0 && x1 < x) && (y1 >= 0 && y1 < y)) {
+                        result = counter.countGreenis(x, y, matrix, y1, x1, n);
+                    } else {
+                        throw new IllegalArgumentException(ExceptionMessages.INVALID_COORDINATES);
+                    }
 
                 } else {
-                    throw new IllegalArgumentException("Invalid grid dimensions!");
+                    throw new IllegalArgumentException(ExceptionMessages.INVALID_DIMENSIONS);
                 }
             }
         }

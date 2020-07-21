@@ -1,3 +1,4 @@
+import common.ExceptionMessages;
 import core.Engine;
 import core.EngineImpl;
 
@@ -22,7 +23,7 @@ public class GreenVsRedApp {
         URL resource = classLoader.getResource(fileName);
 
         if (resource == null) {
-            throw new IllegalArgumentException("file is not found!");
+            throw new IllegalArgumentException(ExceptionMessages.MISSING_FILE);
         } else {
             return new File(resource.getFile());
         }

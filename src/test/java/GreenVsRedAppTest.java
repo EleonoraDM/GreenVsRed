@@ -37,6 +37,22 @@ public class GreenVsRedAppTest {
         engine.run(file);
     }
 
+    @Test
+    public void notAllowedToCreateGrid_WithAnyOfTheDimensionsLowerThan2() throws IOException {
+        exc.expect(IllegalArgumentException.class);
+        exc.expectMessage("Invalid grid dimensions!");
+        file = getFileFromResources("exc3.txt");
+        engine.run(file);
+    }
+
+    @Test
+    public void throwsExceptionIfTargetCellIsOutsideTheGrid() throws IOException {
+        exc.expect(IllegalArgumentException.class);
+        exc.expectMessage("Targeted cell is outside the grid!");
+        file = getFileFromResources("exc4.txt");
+        engine.run(file);
+    }
+
 
 
 
@@ -52,7 +68,6 @@ public class GreenVsRedAppTest {
             return new File(resource.getFile());
         }
     }
-
 
 
 }
