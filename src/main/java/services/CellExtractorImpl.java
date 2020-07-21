@@ -8,13 +8,13 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GridCreatorImpl implements GridCreator {
+public class CellExtractorImpl implements CellExtractor {
     private CellFactory factory;
-    private Map<Cell, Integer> grid;
+    private Map<Cell, Integer> cells;
 
-    public GridCreatorImpl() {
+    public CellExtractorImpl() {
         this.factory = new CellFactoryImpl();
-        this.grid = new LinkedHashMap<>();
+        this.cells = new LinkedHashMap<>();
     }
 
     @Override
@@ -24,14 +24,14 @@ public class GridCreatorImpl implements GridCreator {
         Cell cell = factory.createCell(col, row, cellValue);
         extractNeighbours(cell, x, y, matrix);
         int greenis = countGreenis(cell);
-        grid.put(cell, greenis);
+        cells.put(cell, greenis);
 
-        return Collections.unmodifiableMap(grid);
+        return Collections.unmodifiableMap(cells);
     }
 
     @Override
     public void clearCollection(Map<Cell, Integer> cells) {
-        grid.clear();
+        this.cells.clear();
     }
 
     private void extractNeighbours(Cell cell, int x, int y, int[][] matrix) {
