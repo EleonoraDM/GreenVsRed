@@ -10,7 +10,7 @@ public class GreenVsRedApp {
     public static void main(String[] args) throws IOException {
 
         GreenVsRedApp game = new GreenVsRedApp();
-        File file = game.getFileFromResources("exc.txt");
+        File file = game.getFileFromResources("input1.txt");
         Engine engine = new EngineImpl();
         System.out.println(engine.run(file));
 

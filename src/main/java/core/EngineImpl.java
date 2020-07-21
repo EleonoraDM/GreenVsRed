@@ -43,7 +43,7 @@ public class EngineImpl implements Engine {
                     result = counter.countGreenis(x, y, matrix, y1, x1, n);
 
                 } else {
-                    throw new IOException("Invalid grid dimensions!");
+                    throw new IllegalArgumentException("Invalid grid dimensions!");
                 }
             }
         }
