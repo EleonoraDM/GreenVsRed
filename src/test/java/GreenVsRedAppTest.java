@@ -53,6 +53,8 @@ public class GreenVsRedAppTest {
         engine.run(file);
     }
 
+    //Failed due to NumberFormatException! Cannot parse the input when it comes from the file.
+    // But when it is submitted from the console, it does generate output.
     @Test
     public void extractsResultWithMaxGridDimensions() throws IOException {
         file = getFileFromResources("max_dimension.txt");
