@@ -1,5 +1,6 @@
 package services;
 
+import common.Validator;
 import factories.CellFactory;
 import factories.CellFactoryImpl;
 import models.cell.Cell;
@@ -38,35 +39,31 @@ public class CellExtractorImpl implements CellExtractor {
         int x1 = cell.getX();//COL
         int y1 = cell.getY();//ROW
 
-        if (isValidIndex(x1, y1, x, y)) {
-            if (isValidIndex(x1 + 1, y1, x, y))
+        if (Validator.isValidIndex(x1, y1, x, y)) {
+            if (Validator.isValidIndex(x1 + 1, y1, x, y))
                 cell.addNeighbour(factory.createCell(x1 + 1, y1, matrix[y1][x1 + 1]));
 
-            if (isValidIndex(x1 - 1, y1, x, y))
+            if (Validator.isValidIndex(x1 - 1, y1, x, y))
                 cell.addNeighbour(factory.createCell(x1 - 1, y1, matrix[y1][x1 - 1]));
 
-            if (isValidIndex(x1, y1 + 1, x, y))
+            if (Validator.isValidIndex(x1, y1 + 1, x, y))
                 cell.addNeighbour(factory.createCell(x1, y1 + 1, matrix[y1 + 1][x1]));
 
-            if (isValidIndex(x1, y1 - 1, x, y))
+            if (Validator.isValidIndex(x1, y1 - 1, x, y))
                 cell.addNeighbour(factory.createCell(x1, y1 - 1, matrix[y1 - 1][x1]));
 
-            if (isValidIndex(x1 - 1, y1 + 1, x, y))
+            if (Validator.isValidIndex(x1 - 1, y1 + 1, x, y))
                 cell.addNeighbour(factory.createCell(x1 - 1, y1 + 1, matrix[y1 + 1][x1 - 1]));
 
-            if (isValidIndex(x1 + 1, y1 - 1, x, y))
+            if (Validator.isValidIndex(x1 + 1, y1 - 1, x, y))
                 cell.addNeighbour(factory.createCell(x1 + 1, y1 - 1, matrix[y1 - 1][x1 + 1]));
 
-            if (isValidIndex(x1 + 1, y1 + 1, x, y))
+            if (Validator.isValidIndex(x1 + 1, y1 + 1, x, y))
                 cell.addNeighbour(factory.createCell(x1 + 1, y1 + 1, matrix[y1 + 1][x1 + 1]));
 
-            if (isValidIndex(x1 - 1, y1 - 1, x, y))
+            if (Validator.isValidIndex(x1 - 1, y1 - 1, x, y))
                 cell.addNeighbour(factory.createCell(x1 - 1, y1 - 1, matrix[y1 - 1][x1 - 1]));
         }
-    }
-
-    private static boolean isValidIndex(int x1, int y1, int x, int y) {
-        return (x1 >= 0 && x1 < x) && (y1 >= 0 && y1 < y);
     }
 
     private int countGreenis(Cell cell) {
