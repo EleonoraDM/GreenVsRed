@@ -8,6 +8,9 @@ import java.io.*;
 import java.util.Arrays;
 
 public class EngineImpl implements Engine {
+    private final int MIN_GRID = 2;
+    private final int MAX_GRID = 1000;
+
     private final ColourCounter counter = new ColourCounterImpl();
 
     @Override
@@ -44,24 +47,46 @@ public class EngineImpl implements Engine {
     }
 
     private int[] parseInput(BufferedReader reader) throws IOException {
-        return Arrays.stream(reader.readLine().split(", "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int[] tokens = null;
+        String line = reader.readLine();
+
+        try {
+            tokens = Arrays.stream(line.split(", "))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+        } catch (NullPointerException | NumberFormatException ex) {
+            System.out.println(ex.getMessage() + ExceptionMessages.INVALID_INPUT);
+        }
+        return tokens;
     }
 
     private boolean areValidDimensions(int rows, int cols) {
-        return (cols >= 2 && cols <= rows) && rows < 1000;
+        return (cols >= MIN_GRID && cols <= rows) && rows < MAX_GRID;
     }
 
     private int[][] readMatrix(BufferedReader reader, int rows, int cols) throws IOException {
         int[][] matrix = new int[rows][cols];
-
-        for (int i = 0; i < rows; i++) {
-            matrix[i] = Arrays.stream(reader.readLine().split(""))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
+        try {
+            for (int r = 0; r < rows; r++) {
+                String[] tokens = reader.readLine().split("");
+                for (int c = 0; c < cols; c++) {
+                    matrix[r][c] = isValidCellValue(tokens[c]);
+                }
+            }
+        } catch (NullPointerException | NumberFormatException | ArrayIndexOutOfBoundsException ex) {
+            System.out.println(ex.getMessage() + ExceptionMessages.INVALID_INPUT);
         }
         return matrix;
+    }
+
+    private int isValidCellValue(String token) {
+        int value = Integer.parseInt(token);
+
+        if (value == 0 || value == 1) {
+            return value;
+        } else {
+            throw new IllegalArgumentException(ExceptionMessages.INVALID_CELL_VALUE);
+        }
     }
 
     private boolean areValidCoordinates(int x1, int y1, int cols, int rows) {

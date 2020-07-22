@@ -66,7 +66,7 @@ public class CellExtractorImpl implements CellExtractor {
     }
 
     private static boolean isValidIndex(int x1, int y1, int x, int y) {
-        return ((x1 >= 0 && x1 < x) && (y1 >= 0 && y1 < y));
+        return (x1 >= 0 && x1 < x) && (y1 >= 0 && y1 < y);
     }
 
     private int countGreenis(Cell cell) {

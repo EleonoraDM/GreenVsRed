@@ -46,15 +46,58 @@ public class GreenVsRedAppTest {
     }
 
     @Test
-    public void throwsExceptionIfTargetCellIsOutsideTheGrid() throws IOException {
+    public void throwsExcIfTargetCellIsOutsideTheGrid() throws IOException {
         exc.expect(IllegalArgumentException.class);
-        exc.expectMessage("Targeted cell is outside the grid!");
+        exc.expectMessage("KeyCell is outside the grid!");
         file = getFileFromResources("exc4.txt");
         engine.run(file);
     }
 
-    //Failed due to NumberFormatException! Cannot parse the input when it comes from the file.
-    // But when it is submitted from the console, it does generate output.
+    @Test
+    public void throwsExc_IfInputIsWhitespace_Empty_SpecialChar() throws IOException {
+        exc.expect(NullPointerException.class);
+        file = getFileFromResources("exc5.txt");
+        engine.run(file);
+    }
+
+    @Test
+    public void unableToCreateMatrix_WithMissingElement() throws IOException {
+        exc.expect(ArrayIndexOutOfBoundsException.class);
+        file = getFileFromResources("exc7.txt");
+        engine.run(file);
+    }
+
+    @Test
+    public void unableToCreateMatrix_WithMissingRow() throws IOException {
+        exc.expect(NullPointerException.class);
+        file = getFileFromResources("exc8.txt");
+        engine.run(file);
+    }
+
+    @Test
+    public void unableToCreateMatrix_IfCellValueIsNotZeroOrOne() throws IOException {
+        exc.expect(IllegalArgumentException.class);
+        file = getFileFromResources("exc9.txt");
+        engine.run(file);
+    }
+
+    @Test
+    public void throwsExcIfParameterNIsLessOrEqualToZero() throws IOException {
+        exc.expect(IllegalArgumentException.class);
+        exc.expectMessage("Invalid N parameter! Unable to start the engine!");
+        file = getFileFromResources("exc10.txt");
+        engine.run(file);
+    }
+
+    @Test
+    public void throwsExcIfParameterNIsWhitespace_Empty_SpecialChar() throws IOException {
+        exc.expect(NullPointerException.class);
+        file = getFileFromResources("exc11.txt");
+        engine.run(file);
+    }
+
+    //Failed due to NumberFormatException! Cannot parse the input when it comes from the file,
+    // but submitted from the console, it does generate output.
     @Test
     public void extractsResultWithMaxGridDimensions() throws IOException {
         file = getFileFromResources("max_dimension.txt");
@@ -66,9 +109,6 @@ public class GreenVsRedAppTest {
         file = getFileFromResources("min_dimension.txt");
         System.out.println(engine.run(file));
     }
-
-
-
 
 
     private File getFileFromResources(String fileName) {

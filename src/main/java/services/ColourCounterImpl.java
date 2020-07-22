@@ -1,5 +1,6 @@
 package services;
 
+import common.ExceptionMessages;
 import factories.GenerationFactory;
 import factories.GenerationFactoryImpl;
 
@@ -15,19 +16,22 @@ public class ColourCounterImpl implements ColourCounter {
                             int[][] matrix,
                             int cellY, int cellX,
                             int n) {
-
         int targetValue = matrix[cellY][cellX];
         int counter = 0;
 
-        if (getCellColor(targetValue)) {
-            counter++;
-        }
-        while (n-- > 0) {
-            matrix = factory.createNextGeneration(x, y, matrix);
-
-            if (getCellColor(matrix[cellY][cellX])) {
+        if (n >= 0) {
+            if (getCellColor(targetValue)) {
                 counter++;
             }
+            while (n-- > 0) {
+                matrix = factory.createNextGeneration(x, y, matrix);
+
+                if (getCellColor(matrix[cellY][cellX])) {
+                    counter++;
+                }
+            }
+        }else {
+            throw new IllegalArgumentException(ExceptionMessages.INVALID_N);
         }
         return counter;
     }
