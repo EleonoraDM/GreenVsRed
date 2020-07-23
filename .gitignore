@@ -1,6 +1,5 @@
 # Excluded files
 .idea/
-*.xml
 out/
 *.iml
 target/*
